@@ -1,7 +1,7 @@
 # # # # ########################
 #
 FROM php:5.6-apache
-LABEL maintainer =  "Rene Vrijenhoek <rene.vrijenhoek@vopak.com>"
+LABEL maintainer =  "ReneV@20181024"
 
 # Set environment variables
 ENV MYSQL_HOST="mysql" \
