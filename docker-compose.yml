@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+#  mysql:
+#    image: mysql:5.6
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=my-secret-pw
+#    restart: always
+#    volumes:
+#      - db_data:/var/lib/mysql
+  ipam:
+#    depends_on:
+#      - mysql
+    image: vortexict/phpipam:0.3
+    container_name: ipam
+    environment:
+      - MYSQL_USER=phpipam_root
+      - MYSQL_PASSWORD=PhP-1358
+      - MYSQL_HOST=34.254.145.174
+      - MYSQL_DB=phpipam
+      - MYSQL_PORT=3306
+    ports:
+      - "80:80"
+volumes:
+  db_data:

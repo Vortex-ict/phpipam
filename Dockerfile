@@ -4,18 +4,18 @@ FROM php:5.6-apache
 LABEL maintainer =  "ReneV@20181024"
 
 # Set environment variables
-ENV MYSQL_HOST="mysql" \
-    MYSQL_USER="phpipam" \
-    MYSQL_PASSWORD="phpipamadmin" \
-    MYSQL_DB="phpipam" \
-    MYSQL_PORT="3306" \
-    PHPIPAM_SOURCE="https://github.com/phpipam/phpipam/" \
-    PHPIPAM_VERSION="1.3.2" \
-    PHPMAILER_SOURCE="https://github.com/PHPMailer/PHPMailer/" \
-    PHPMAILER_VERSION="5.2.21" \
-    PHPSAML_SOURCE="https://github.com/onelogin/php-saml/" \
-    PHPSAML_VERSION="2.10.6" \
-    WEB_REPO="/var/www/html"
+#ENV    MYSQL_HOST="mysql"
+#ENV    MYSQL_USER="phpipam"
+#ENV    MYSQL_PASSWORD="password"
+#ENV    MYSQL_DB="phpipam"
+#ENV    MYSQL_PORT="3306"
+ENV    PHPIPAM_SOURCE="https://github.com/phpipam/phpipam/"
+ENV    PHPIPAM_VERSION="1.3.2"
+ENV    PHPMAILER_SOURCE="https://github.com/PHPMailer/PHPMailer/"
+ENV    PHPMAILER_VERSION="5.2.21"
+ENV    PHPSAML_SOURCE="https://github.com/onelogin/php-saml/"
+ENV    PHPSAML_VERSION="2.10.6"
+ENV    WEB_REPO="/var/www/html"
 
 # Install required deb packages
 RUN sed -i /etc/apt/sources.list -e 's/$/ non-free'/ && \
@@ -66,16 +66,14 @@ RUN tar -xzf /tmp/v${PHPSAML_VERSION}.tar.gz -C ${WEB_REPO}/functions/php-saml/ 
 
 # Use system environment variables into config.php
 RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
-    chown www-data /var/www/html/app/admin/import-export/upload && \
-    chown www-data /var/www/html/app/subnets/import-subnet/upload && \
-    chown www-data /var/www/html/css/images/logo && \
-    sed -i \
-    -e "s/\['host'\] = 'localhost'/\['host'\] = getenv(\"MYSQL_HOST\")/" \ 
-    -e "s/\['user'\] = 'phpipam'/\['user'\] = getenv(\"MYSQL_USER\")/" \ 
-    -e "s/\['pass'\] = 'phpipamadmin'/\['pass'\] = getenv(\"MYSQL_PASSWORD\")/" \ 
-    -e "s/\['name'\] = 'phpipam'/\['name'\] = getenv(\"MYSQL_DB\")/" \ 
-    -e "s/\['port'\] = 3306/\['port'\] = getenv(\"MYSQL_PORT\")/" \
-    -e "s/\['port'\] = 3306;/\['port'\] = 3306;\n\n\$password_file = getenv(\"MYSQL_ENV_MYSQL_PASSWORD_FILE\");\nif(file_exists(\$password_file))\n\$db\['pass'\] = preg_replace(\"\/\\\\s+\/\", \"\", file_get_contents(\$password_file));/" \
+   chown www-data /var/www/html/app/admin/import-export/upload && \
+   chown www-data /var/www/html/app/subnets/import-subnet/upload && \
+   chown www-data /var/www/html/css/images/logo && \
+    sed -i -e "s/\['host'\] = '.*'/\['host'\] =  "\"${MYSQL_HOST}\""/" \ 
+           -e "s/\['user'\] = '.*'/\['user'\] = "\"${MYSQL_USER}\""/" \ 
+           -e "s/\['pass'\] = '.*'/\['pass'\] = "\"${MYSQL_PASSWORD}\""/" \ 
+           -e "s/\['name'\] = '.*'/\['name'\] = "\"${MYSQL_DB}\""/" \ 
+           -e "s/\['port'\] = 3306/\['port'\] = "${MYSQL_PORT}"/" \
     ${WEB_REPO}/config.php
 
 EXPOSE 80
