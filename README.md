@@ -1,8 +1,6 @@
 # docker-phpipam
 
-phpIPAM is an open-source web IP address management application in use by Vopak. Its goal is to provide light and simple IP address management application.
-
-![phpIPAM logo](http://phpipam.net/wp-content/uploads/2014/12/phpipam_logo_small.png)
+phpIPAM is an open-source web IP address management application in use by Vopak. IP address management application.
 
 ## How to use this Docker image
 
@@ -30,7 +28,7 @@ version: '3'
 services:
   ipam:
     depends_on:
-    
+
     image: vortexict/phpipam
     environment:
       - MYSQL_USER=root
