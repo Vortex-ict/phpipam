@@ -1,5 +1,5 @@
 # # # # ########################
-#
+# 
 FROM php:5.6-apache
 LABEL maintainer =  "ReneV@20181024"
 
@@ -73,7 +73,7 @@ RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
            -e "s/\['user'\] = '.*'/\['user'\] = "\"${MYSQL_USER}\""/" \ 
            -e "s/\['pass'\] = '.*'/\['pass'\] = "\"${MYSQL_PASSWORD}\""/" \ 
            -e "s/\['name'\] = '.*'/\['name'\] = "\"${MYSQL_DB}\""/" \ 
-           -e "s/\['port'\] = 3306/\['port'\] = "${MYSQL_PORT}"/" \
+           -e "s/\['port'\] = 3306/\['port'\] = 3306/" \
     ${WEB_REPO}/config.php
 
 EXPOSE 80
