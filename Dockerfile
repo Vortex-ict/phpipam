@@ -1,5 +1,5 @@
 # # # # ########################
-# 
+# #
 FROM php:5.6-apache
 LABEL maintainer =  "ReneV@20181024"
 
