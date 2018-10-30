@@ -69,10 +69,10 @@ RUN cp ${WEB_REPO}/config.dist.php ${WEB_REPO}/config.php && \
    chown www-data /var/www/html/app/admin/import-export/upload && \
    chown www-data /var/www/html/app/subnets/import-subnet/upload && \
    chown www-data /var/www/html/css/images/logo && \
-    sed -i -e "s/\['host'\] = '.*'/\['host'\] =  "\"${MYSQL_HOST}\""/" \ 
-           -e "s/\['user'\] = '.*'/\['user'\] = "\"${MYSQL_USER}\""/" \ 
-           -e "s/\['pass'\] = '.*'/\['pass'\] = "\"${MYSQL_PASSWORD}\""/" \ 
-           -e "s/\['name'\] = '.*'/\['name'\] = "\"${MYSQL_DB}\""/" \ 
+    sed -i -e "s/\['host'\] = '.*'/\['host'\] = getenv("\"${MYSQL_HOST}\"")/" \ 
+           -e "s/\['user'\] = '.*'/\['user'\] = getenv("\"${MYSQL_USER}\"")/" \ 
+           -e "s/\['pass'\] = '.*'/\['pass'\] = getenv("\"${MYSQL_PASSWORD}\"")/" \ 
+           -e "s/\['name'\] = '.*'/\['name'\] = getenv("\"${MYSQL_DB}\"")/" \ 
            -e "s/\['port'\] = 3306/\['port'\] = 3306/" \
     ${WEB_REPO}/config.php
 
