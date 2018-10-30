@@ -11,7 +11,7 @@ services:
   ipam:
 #    depends_on:
 #      - mysql
-    image: vortexict/phpipam:0.3
+    image: vortexict/phpipam:latest
     container_name: ipam
     environment:
       - MYSQL_USER=phpipam_root
